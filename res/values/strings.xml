@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExpTracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="amt_spent">Amount Spent</string>
+    <string name="place">Place</string>
+    <string name="desc">Description</string>
+    <string name="catgy">Category</string>
+    <string name="dt">Date</string>
+    
+
+</resources>
