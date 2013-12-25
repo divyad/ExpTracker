@@ -44,6 +44,7 @@ public class MainActivity extends TabActivity {
         tabHost.addTab(outboxSpec); // Adding Add Expense tab
         tabHost.addTab(profileSpec); // Adding Past Expense tab
         
+        System.out.println("Activity Created");
     }
     
 }
