@@ -6,8 +6,24 @@
     <string name="amt_spent">Amount Spent</string>
     <string name="place">Place</string>
     <string name="desc">Description</string>
-    <string name="catgy">Category</string>
-    <string name="dt">Date</string>
+    <string name="catgy">Expense Category</string>
+    <string name="expdt">Expense Date</string>
+    <string name="addexpbtn">Add Expense</string>
+    <string name="lastexp">Last Expense</string>
+    <string name="totalexp">Total amount spent in last 30 days</string>
     
-
+    <string-array name="category_list">
+        <item>Select Category</item>
+        <item>Automobile</item>
+        <item>Bill Payment</item>
+        <item>Entertainment</item>
+        <item>Food</item>
+        <item>Grocery</item>
+        <item>Medical</item>
+        <item>Rent</item>
+        <item>Shopping</item>
+        <item>Tickets</item>
+        <item>Others</item>
+    </string-array>
+    
 </resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+     
+     <EditText
+                      android:id="@+id/amountSpenttEdtTxt"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:hint="@string/amt_spent"
+                      android:layout_marginTop="20dp"
+                      android:ems="10"
+                      android:inputType="number" >
+                  </EditText>
+
+                  <EditText
+                      android:id="@+id/placeEdtTxt"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:ems="10" 
+                      android:hint="@string/place" />
+
+                  <Spinner
+                      android:id="@+id/catSpinner"
+                      android:layout_width="223dp"
+                      android:layout_marginTop="20dp"
+                      android:layout_height="32dp" />
+                  
+                  <EditText
+                      android:id="@+id/descEdtTxt"
+                      android:layout_width="fill_parent"
+                      android:layout_height="wrap_content"
+                      android:layout_marginTop="20dp"
+                      android:ems="10"
+                      android:inputType="textMultiLine"
+                      android:hint="@string/desc"  />
+                  
+                 <Button
+				        android:id="@+id/btnChangeDate"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content"
+				        android:layout_marginTop="20dp"
+				        android:text="" />
+ 
+   
+			    <TextView
+			        android:id="@+id/tvDate"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:text=""
+			        />
+			 
+			    <DatePicker
+			        android:id="@+id/dpResult"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content" /> 
+
+                  <Button
+                      android:id="@+id/add"
+                      style="?android:attr/buttonStyleSmall"
+                      android:layout_marginTop="20dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/addexpbtn"
+                      android:onClick="addExpense" />
+  
+</LinearLayout>

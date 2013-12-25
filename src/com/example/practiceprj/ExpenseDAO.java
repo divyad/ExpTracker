@@ -47,6 +47,20 @@ public class ExpenseDAO {
 	    return newExp;
 	  }
 	  
+	  public Expense createNewExp(String amt) {
+		    ContentValues values = new ContentValues();
+		    values.put(DatabaseHelper.COLUMN_AMOUNT,amt);
+		    long insertId = database.insert(DatabaseHelper.TABLE_EXPENSES, null,
+		        values);
+		    Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
+		        allColumns, DatabaseHelper.COLUMN_ID + " = " + insertId, null,
+		        null, null, null);
+		    cursor.moveToFirst();
+		    Expense newExp = cursorToExpense(cursor);
+		    cursor.close();
+		    return newExp;
+		  }
+	  
 	  /*
 	   * Getting values from Cursor result set and setting to Expense Object
 	   */
@@ -55,7 +69,7 @@ public class ExpenseDAO {
 		  	System.out.println(" cursor.getString(2):-"+ cursor.getString(2));
 		  	System.out.println(" cursor.getString(3):-"+ cursor.getString(3));
 		  	System.out.println("cursor.getLong(0):-"+cursor.getLong(0));
-		    Expense exp = new Expense(100, cursor.getString(2) ,cursor.getString(3) , new Date());
+		    Expense exp = new Expense(Integer.parseInt(cursor.getString(1)), cursor.getString(2) ,cursor.getString(3) , new Date());
 		    exp.setId(cursor.getLong(0));
 		    return exp;
 		  }
@@ -84,5 +98,34 @@ public class ExpenseDAO {
 	    return expList;
 	  }
 
+	  public Expense getLastExpenses() {
+
+	  Cursor cursor = database.rawQuery("select * from expenses where _id = (select max(_id) from expenses)", null);
 	  
+	      System.out.println("cursor.getCount():-"+cursor.getCount());
+	      if(cursor.getCount() == 1)
+	      {
+	    	cursor.moveToFirst();
+	    	return cursorToExpense(cursor);
+	      }
+    
+      cursor.close();
+      return null;
+	}
+	  
+	  public int getTotalExpenseAmount() {
+
+		  Cursor cursor = database.rawQuery("select sum(amount) from expenses", null);
+		  
+		      System.out.println("cursor.getCount():-"+cursor.getCount());
+		      if(cursor.getCount() == 1)
+		      {
+		    	cursor.moveToFirst();
+		    	System.out.println("cursor.getInt(0):-"+cursor.getInt(0));
+		    	return cursor.getInt(0);
+		      }
+	    
+	      cursor.close();
+	      return 0;
+		}
 }

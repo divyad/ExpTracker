@@ -22,6 +22,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
+         <!-- Home Activity -->
+        <activity android:name=".HomeExpenseActivity" />
+ 
+        <!-- Add Expense Activity -->
+        <activity android:name=".NewExpenseActivity" />
+ 
+        <!-- Past Expense Activity -->
+        <activity android:name=".PastExpensesActivity" />
+        
     </application>
 
 </manifest>

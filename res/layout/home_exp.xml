@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+     
+     <TextView
+                     android:id="@+id/totalamtspent"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/totalexp"
+                     android:layout_marginTop="20dp"
+                     android:textAppearance="?android:attr/textAppearanceMedium"  />
+
+                 <TextView
+                     android:id="@+id/totalamtspentvalue"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="10dp"
+                     />
+
+                 <TextView
+                     android:id="@+id/lastexp"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:text="@string/lastexp" 
+                     android:layout_marginTop="20dp"
+                     android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                 <TextView
+                     android:id="@+id/lastexpvalue"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_marginTop="10dp"
+                      />
+  
+</LinearLayout>
