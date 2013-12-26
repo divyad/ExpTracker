@@ -11,6 +11,7 @@
     <string name="addexpbtn">Add Expense</string>
     <string name="lastexp">Last Expense</string>
     <string name="totalexp">Total amount spent in last 30 days</string>
+    <string name="pick_date">pick_date</string>
     
     <string-array name="category_list">
         <item>Select Category</item>

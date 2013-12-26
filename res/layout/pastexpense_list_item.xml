@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
  
-    <!-- From Label -->
+    <!-- Amount -->
     <TextView
         android:id="@+id/amount"
         android:layout_width="fill_parent"
@@ -15,7 +15,7 @@
         android:textSize="20dip"
         android:textStyle="bold" />
      
-    <!-- Mail Subject -->
+    <!-- Description -->
     <TextView android:id="@+id/desc"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
@@ -24,11 +24,11 @@
         android:textSize="15dip"
         android:layout_below="@id/amount"/>
      
-    <!-- Mail date -->
+    <!-- Place -->
     <TextView android:id="@+id/place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:padding="8dip"/>/
+        android:padding="8dip"/>
   
 </RelativeLayout>

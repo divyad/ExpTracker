@@ -1,12 +1,15 @@
 package com.example.practiceprj;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -15,10 +18,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-public class NewExpenseActivity extends Activity{
+public class NewExpenseActivity extends FragmentActivity{
 	
 	private ExpenseDAO datasource;
 	EditText amountBox;
@@ -39,6 +41,7 @@ public class NewExpenseActivity extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.newexpense);
+        btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
         
         datasource = new ExpenseDAO(this);
         datasource.open();
@@ -84,9 +87,10 @@ public class NewExpenseActivity extends Activity{
         System.out.println("descBox in OnCreate():-"+ descBox.getText().toString());
         catSpinner = (Spinner) findViewById(R.id.catSpinner);
         System.out.println("catSpinner in OnCreate():-"+ catSpinner.getSelectedItem().toString());
+        System.out.println("btnChangeDate.getText():-"+ btnChangeDate.getText());
 	   int amount = Integer.parseInt(amountBox.getText().toString());
 	
-	   Expense expObj = new Expense(amount, placeBox.getText().toString(), descBox.getText().toString() , new Date());
+	   Expense expObj = new Expense(amount, placeBox.getText().toString(), descBox.getText().toString() ,stringtoDate(btnChangeDate.getText().toString()));
 	
 	   datasource.createExpense(expObj);
 	   
@@ -101,8 +105,7 @@ public class NewExpenseActivity extends Activity{
 	// display current date
 	public void setCurrentDateOnView() {
  
-		dpResult = (DatePicker) findViewById(R.id.dpResult);
-		btnChangeDate = (Button) findViewById(R.id.btnChangeDate);
+		//dpResult = (DatePicker) findViewById(R.id.dpResult);
  
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
@@ -116,7 +119,7 @@ public class NewExpenseActivity extends Activity{
 			.append(year).append(" "));
  
 		// set current date into datepicker
-		dpResult.init(year, month, day, null);
+		//dpResult.init(year, month, day, null);
  
 	}
  
@@ -164,11 +167,34 @@ public class NewExpenseActivity extends Activity{
 			   .append(" "));
  
 			// set selected date into datepicker also
-			dpResult.init(year, month, day, null);
+			//dpResult.init(year, month, day, null);
  
 		}
 	};
  
+	public void showDatePickerDialog(View v) {
+	    DialogFragment newFragment = new DatePickerFragment();
+	    newFragment.show(getSupportFragmentManager(), "datePicker");
+	    newFragment.setCancelable(false);
+	    
+	}
+	
+	public Date stringtoDate(String dateInString)
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
+	 
+		try {
+	 
+			Date date = formatter.parse(dateInString);
+			System.out.println(date);
+			System.out.println(formatter.format(date));
+			return date;
+	 
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Date();
+	}
 	
 	@Override
     protected void onResume() {
@@ -183,4 +209,5 @@ public class NewExpenseActivity extends Activity{
       datasource.close();
       super.onPause();
     }
+    
 }
