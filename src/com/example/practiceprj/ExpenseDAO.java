@@ -17,7 +17,7 @@ public class ExpenseDAO {
 	  private SQLiteDatabase database;
 	  private DatabaseHelper dbHelper;
 	  private String[] allColumns = { DatabaseHelper.COLUMN_ID,DatabaseHelper.COLUMN_AMOUNT,
-			  DatabaseHelper.COLUMN_PLACE, DatabaseHelper.COLUMN_DESC };
+			  DatabaseHelper.COLUMN_PLACE, DatabaseHelper.COLUMN_DESC , DatabaseHelper.COLUMN_EXPDT};
 
 	  public ExpenseDAO(Context context) {
 	    dbHelper = new DatabaseHelper(context);
@@ -36,6 +36,7 @@ public class ExpenseDAO {
 	    values.put(DatabaseHelper.COLUMN_AMOUNT, expObj.getAmountSpent());
 	    values.put(DatabaseHelper.COLUMN_PLACE, expObj.getPlace());
 	    values.put(DatabaseHelper.COLUMN_DESC, expObj.getDesc());
+	    values.put(DatabaseHelper.COLUMN_EXPDT, expObj.getExpDt().toString());
 	    long insertId = database.insert(DatabaseHelper.TABLE_EXPENSES, null,
 	        values);
 	    Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
@@ -47,20 +48,6 @@ public class ExpenseDAO {
 	    return newExp;
 	  }
 	  
-	  public Expense createNewExp(String amt) {
-		    ContentValues values = new ContentValues();
-		    values.put(DatabaseHelper.COLUMN_AMOUNT,amt);
-		    long insertId = database.insert(DatabaseHelper.TABLE_EXPENSES, null,
-		        values);
-		    Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
-		        allColumns, DatabaseHelper.COLUMN_ID + " = " + insertId, null,
-		        null, null, null);
-		    cursor.moveToFirst();
-		    Expense newExp = cursorToExpense(cursor);
-		    cursor.close();
-		    return newExp;
-		  }
-	  
 	  /*
 	   * Getting values from Cursor result set and setting to Expense Object
 	   */
@@ -68,6 +55,7 @@ public class ExpenseDAO {
 		  	System.out.println(" cursor.getString(1):-"+ cursor.getString(1));
 		  	System.out.println(" cursor.getString(2):-"+ cursor.getString(2));
 		  	System.out.println(" cursor.getString(3):-"+ cursor.getString(3));
+		  	System.out.println(" cursor.getString(4):-"+ cursor.getString(4));
 		  	System.out.println("cursor.getLong(0):-"+cursor.getLong(0));
 		    Expense exp = new Expense(Integer.parseInt(cursor.getString(1)), cursor.getString(2) ,cursor.getString(3) , new Date());
 		    exp.setId(cursor.getLong(0));
