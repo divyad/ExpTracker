@@ -14,6 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	  public static final String COLUMN_AMOUNT = "amount";
 	  public static final String COLUMN_PLACE = "place";
 	  public static final String COLUMN_DESC = "desc";
+	  public static final String COLUMN_CATEGORY = "category";
 	  public static final String COLUMN_EXPDT = "expdt";
 
 	  private static final String DATABASE_NAME = "ExptrackerDB";
@@ -26,6 +27,7 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	      + COLUMN_AMOUNT + " integer not null, " 
 	      + COLUMN_PLACE + " text not null," 
 	      + COLUMN_DESC + " text not null,"
+	      + COLUMN_CATEGORY + " text not null,"
 	      + COLUMN_EXPDT + " date);";
 
 	  /* In the constructor of your subclass you call the super() method of 

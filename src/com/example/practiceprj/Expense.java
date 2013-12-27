@@ -9,13 +9,15 @@ public class Expense {
 	private String place;
 	private String desc;
 	private Date expDt;
+	private String category;
 	
-	public Expense(int amountSpent, String place, String desc, Date expDt) {
+	public Expense(int amountSpent, String place, String desc,String category, Date expDt) {
 		super();
 		this.amountSpent = amountSpent;
 		this.place = place;
 		this.desc = desc;
 		this.expDt = expDt;
+		this.category = category;
 	}
 	public int getAmountSpent() {
 		return amountSpent;
@@ -53,5 +55,11 @@ public class Expense {
 	  public String toString() {
 	    return desc;
 	  }*/
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	
 }

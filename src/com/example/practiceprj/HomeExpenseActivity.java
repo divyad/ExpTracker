@@ -15,13 +15,21 @@ public class HomeExpenseActivity extends Activity{
         
         datasource = new ExpenseDAO(this);
         datasource.open();
-        Expense exp = datasource.getLastExpenses();
-        lastExp = (TextView) findViewById( R.id.lastexpvalue );
-        lastExp.setText(exp.getAmountSpent() +"," + exp.getDesc() +","+  exp.getPlace());
         
+        //Total amount spent
         int totalAmountSpent = datasource.getTotalExpenseAmount();
         totalExpAmt = (TextView) findViewById( R.id.totalamtspentvalue );
         totalExpAmt.setText("Rs "+totalAmountSpent);
+        
+        //Last Expense
+        Expense exp = datasource.getLastExpenses();
+        if(exp != null)
+        {	
+        lastExp = (TextView) findViewById( R.id.lastexpvalue );
+        lastExp.setText("On "+exp.getExpDt() + "\nRs "+exp.getAmountSpent() +"," + exp.getDesc() +" in "+  exp.getPlace());
+        }
+        
+        
         
     }
 }

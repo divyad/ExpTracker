@@ -90,7 +90,7 @@ public class NewExpenseActivity extends FragmentActivity{
         System.out.println("btnChangeDate.getText():-"+ btnChangeDate.getText());
 	   int amount = Integer.parseInt(amountBox.getText().toString());
 	
-	   Expense expObj = new Expense(amount, placeBox.getText().toString(), descBox.getText().toString() ,stringtoDate(btnChangeDate.getText().toString()));
+	   Expense expObj = new Expense(amount, placeBox.getText().toString(), descBox.getText().toString() , catSpinner.getSelectedItem().toString() ,stringtoDate(btnChangeDate.getText().toString()));
 	
 	   datasource.createExpense(expObj);
 	   
