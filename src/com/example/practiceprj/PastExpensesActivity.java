@@ -1,10 +1,12 @@
 package com.example.practiceprj;
 
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import android.app.ListActivity;
@@ -46,6 +48,7 @@ public class PastExpensesActivity extends ListActivity {
 			if (values != null) {
 				System.out.println("values.size():-" + values.size());
 				Iterator<Expense> iterator = values.iterator();
+				NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
 				while (iterator.hasNext()) {
 
 					Expense expObj = iterator.next();
@@ -53,7 +56,7 @@ public class PastExpensesActivity extends ListActivity {
 
 					// adding each child node to HashMap key => value
 					map.put(TAG_AMT,
-							"Rs " + String.valueOf(expObj.getAmountSpent()));
+							nf.format(expObj.getAmountSpent()));
 					map.put(TAG_PLACE, expObj.getPlace());
 					map.put(TAG_DESC, expObj.getDesc());
 					map.put(TAG_CATEGORY, expObj.getCategory());
