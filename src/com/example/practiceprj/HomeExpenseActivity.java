@@ -1,5 +1,9 @@
 package com.example.practiceprj;
 
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +13,7 @@ public class HomeExpenseActivity extends Activity {
 	private ExpenseDAO datasource;
 	TextView lastExp;
 	TextView totalExpAmt;
+	final String DT_FORMAT = "dd-MMM-yyyy";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,14 +28,16 @@ public class HomeExpenseActivity extends Activity {
 			// Total amount spent
 			int totalAmountSpent = datasource.getTotalExpenseAmount();
 			totalExpAmt = (TextView) findViewById(R.id.totalamtspentvalue);
-			totalExpAmt.setText("Rs " + totalAmountSpent);
+			NumberFormat nf = NumberFormat.getCurrencyInstance(new Locale("en", "IN"));
+			totalExpAmt.setText(nf.format(totalAmountSpent));
 
 			// Last Expense
 			Expense exp = datasource.getLastExpenses();
+			SimpleDateFormat sdf = new SimpleDateFormat(DT_FORMAT);
 			if (exp != null) {
 				lastExp = (TextView) findViewById(R.id.lastexpvalue);
-				lastExp.setText("On " + exp.getExpDt() + "\nRs " + exp.getAmountSpent() + "," + exp.getDesc() + " in "
-						+ exp.getPlace());
+				lastExp.setText(nf.format(exp.getAmountSpent())  + "\nOn " + sdf.format(exp.getExpDt()) 
+						+  "\n" + exp.getDesc() + " at "+ exp.getPlace());
 			}
 		} finally {
 			if (datasource != null)
