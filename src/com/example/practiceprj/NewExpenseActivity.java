@@ -48,7 +48,6 @@ public class NewExpenseActivity extends FragmentActivity {
 		catSpinner = (Spinner) findViewById(R.id.catSpinner);
 
 		datasource = new ExpenseDAO(this);
-		datasource.open();
 
 		setCurrentDateOnView();
 		addListenerOnButton();
@@ -162,9 +161,6 @@ public class NewExpenseActivity extends FragmentActivity {
 			btnChangeDate.setText(new StringBuilder().append(month + 1).append("-").append(day).append("-").append(year)
 					.append(" "));
 
-			// set selected date into datepicker also
-			// dpResult.init(year, month, day, null);
-
 		}
 	};
 
@@ -189,16 +185,13 @@ public class NewExpenseActivity extends FragmentActivity {
 
 	@Override
 	protected void onResume() {
-		System.out.println("OnResume called ");
-		datasource.open();
 		super.onResume();
+		datasource.open();
 	}
 
 	@Override
 	protected void onPause() {
-		System.out.println("onPause called ");
-		datasource.close();
 		super.onPause();
+		datasource.close();
 	}
-
 }

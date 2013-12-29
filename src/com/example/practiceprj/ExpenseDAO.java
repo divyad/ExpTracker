@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import android.content.ContentValues;
@@ -21,7 +22,44 @@ public class ExpenseDAO {
 			DatabaseHelper.COLUMN_AMOUNT, DatabaseHelper.COLUMN_PLACE,
 			DatabaseHelper.COLUMN_DESC, DatabaseHelper.COLUMN_CATEGORY,
 			DatabaseHelper.COLUMN_EXPDT };
+	
+	public static class ExpenseCache {
+		LinkedList<Expense> allExpenses;
+		Expense lastExpense;
 
+		public void addNewExpense(Expense expense) {
+			allExpenses.addFirst(expense);
+			lastExpense = expense;
+			Log.i("ExpenseCache", "Added new item:" + expense.getDesc());
+		}
+
+		public Expense getLastExpense() {
+			return lastExpense;
+		}
+		
+		public void setLastExpense(Expense exp) {
+			Log.i("ExpenseCache", "Set last expense from db: " + exp.getDesc());
+			this.lastExpense = exp;
+		}
+
+		public List<Expense> getAllExpenses() {
+			return allExpenses;
+		}
+		
+		public void setAllExpenses(LinkedList<Expense> expList) {
+			Log.i("ExpenseCache", "Set all expense list in cache size: "+ expList.size());
+			this.allExpenses = expList;
+		}
+		
+		public void clear() {
+			allExpenses = null;
+			lastExpense = null;
+			Log.i("ExpenseCache", "Cleared cache");
+		}
+	}
+	
+	public static final ExpenseCache CACHE = new ExpenseCache();
+	
 	public ExpenseDAO(Context context) {
 		dbHelper = new DatabaseHelper(context);
 	}
@@ -35,6 +73,7 @@ public class ExpenseDAO {
 	}
 
 	public Expense createExpense(Expense expObj) {
+		Log.i("createExpense", "Creating new expense: " + expObj.toString());
 		ContentValues values = new ContentValues();
 		values.put(DatabaseHelper.COLUMN_AMOUNT, expObj.getAmountSpent());
 		values.put(DatabaseHelper.COLUMN_PLACE, expObj.getPlace());
@@ -47,13 +86,11 @@ public class ExpenseDAO {
 			Log.w("createExpense", "Unable to insert data");
 			return null;
 		}
-		Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
-				allColumns, DatabaseHelper.COLUMN_ID + " = " + insertId, null,
-				null, null, null);
-		cursor.moveToFirst();
-		Expense newExp = cursorToExpense(cursor);
-		cursor.close();
-		return newExp;
+		
+		expObj.setId(insertId);
+		// Update cache
+		CACHE.addNewExpense(expObj);
+		return expObj;
 	}
 
 	/*
@@ -86,54 +123,66 @@ public class ExpenseDAO {
 	}
 
 	public List<Expense> getAllExpenses() {
-		List<Expense> expList = new ArrayList<Expense>();
-
-		// Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
-		// allColumns, null, null, null, null, null);
-		Cursor cursor = database.rawQuery(
-				"select * from expenses order by expdt desc", null);
-
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			Expense exp = cursorToExpense(cursor);
-			expList.add(exp);
-			cursor.moveToNext();
+		if (CACHE.getAllExpenses() == null) {
+			LinkedList<Expense> expList = new LinkedList<Expense>();
+	
+			// Cursor cursor = database.query(DatabaseHelper.TABLE_EXPENSES,
+			// allColumns, null, null, null, null, null);
+			Cursor cursor = null;
+			try { 
+				cursor = database.rawQuery("select * from expenses order by expdt desc", null);
+				cursor.moveToFirst();
+				while (!cursor.isAfterLast()) {
+					Expense exp = cursorToExpense(cursor);
+					expList.add(exp);
+					cursor.moveToNext();
+				}
+				CACHE.setAllExpenses(expList);
+			} finally {
+				cursor.close();
+			}
+		} else {
+			Log.i("ExpenseCache", "hit cache for all items");
 		}
-		// make sure to close the cursor
-		cursor.close();
-		return expList;
+		return CACHE.getAllExpenses();
 	}
 
 	public Expense getLastExpenses() {
+		if (CACHE.getLastExpense() == null) {
+			Cursor cursor = null;
 
-		Cursor cursor = database
-				.rawQuery(
-						"select * from expenses where _id = (select max(_id) from expenses)",
-						null);
-
-		System.out.println("cursor.getCount():-" + cursor.getCount());
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
-			return cursorToExpense(cursor);
+			try {
+				cursor = database.rawQuery("select * from expenses where _id = (select max(_id) from expenses)", null);
+				System.out.println("cursor.getCount():-" + cursor.getCount());
+				if (cursor.getCount() == 1) {
+					cursor.moveToFirst();
+					CACHE.setLastExpense(cursorToExpense(cursor));
+				}
+			} finally {
+				cursor.close();
+			}
+		} else {
+			Log.i("ExpenseCache", "hit cache for last item");
 		}
-
-		cursor.close();
-		return null;
+		return CACHE.getLastExpense();
 	}
 
 	public int getTotalExpenseAmount() {
 
-		Cursor cursor = database.rawQuery("select sum(amount) from expenses",
-				null);
-
-		System.out.println("cursor.getCount():-" + cursor.getCount());
-		if (cursor.getCount() == 1) {
-			cursor.moveToFirst();
-			System.out.println("cursor.getInt(0):-" + cursor.getInt(0));
-			return cursor.getInt(0);
+		Cursor cursor = null;
+		try {
+			cursor = database.rawQuery("select sum(amount) from expenses",
+					null);
+	
+			System.out.println("cursor.getCount():-" + cursor.getCount());
+			if (cursor.getCount() == 1) {
+				cursor.moveToFirst();
+				System.out.println("cursor.getInt(0):-" + cursor.getInt(0));
+				return cursor.getInt(0);
+			}
+		} finally {
+			cursor.close();
 		}
-
-		cursor.close();
 		return 0;
 	}
 

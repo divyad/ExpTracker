@@ -62,4 +62,14 @@ public class Expense {
 		this.category = category;
 	}
 	
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Expense{id:").append(id).append(", amount:").append(amountSpent)
+		.append(", place:").append(place).append(", desc:").append(desc)
+		.append(", expDt:").append(expDt).append(", category:").append(category)
+		.append("}");
+		return builder.toString();
+	}
 }

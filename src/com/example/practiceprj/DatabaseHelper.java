@@ -27,8 +27,8 @@ public class DatabaseHelper extends SQLiteOpenHelper{
 	      + COLUMN_AMOUNT + " integer not null, " 
 	      + COLUMN_PLACE + " text not null," 
 	      + COLUMN_DESC + " text not null,"
-	      + COLUMN_CATEGORY + " text not null,"
-	      + COLUMN_EXPDT + " date);";
+	      + COLUMN_EXPDT + " datetime ,"
+	      + COLUMN_CATEGORY + " text not null);";
 
 	  /* In the constructor of your subclass you call the super() method of 
   	 * SQLiteOpenHelper, specifying the database name and the current database version.*/
