@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ExpTracker</string>
+    <string name="action_settings">Settings</string>
+    <string name="amt_spent">Amount Spent</string>
+    <string name="place">Place</string>
+    <string name="desc">Description</string>
+    <string name="catgy">Expense Category</string>
+    <string name="expdt">Expense Date</string>
+    <string name="addexpbtn">Add Expense</string>
+    <string name="lastexp">Last Expense</string>
+    <string name="totalexp">Total amount spent in last 30 days</string>
+    <string name="pick_date">pick_date</string>
+    
+    <string-array name="category_list">
+        <item>Select Category</item>
+        <item>Automobile</item>
+        <item>Bill Payment</item>
+        <item>Entertainment</item>
+        <item>Food</item>
+        <item>Grocery</item>
+        <item>Medical</item>
+        <item>Rent</item>
+        <item>Shopping</item>
+        <item>Tickets</item>
+        <item>Others</item>
+    </string-array>
+    
+</resources>
